@@ -63,7 +63,7 @@ public class Clientes {
         return query.getResultList();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Cliente> obterClientes() {
         return entityManager.createQuery("from Cliente", Cliente.class).getResultList();
     }
