@@ -23,18 +23,9 @@ public class VendasApplication {
             repo.save(new Cliente("Vayne"));
             repo.save(new Cliente("Draven"));
             System.out.println(repo.findAll());
-            Cliente draven = new Cliente(2, "Dravensssssssssss");
-            repo.save(draven);
-            System.out.println(repo.findAll());
 
-            repo.deleteById(2);
-            System.out.println(repo.findAll());
-
-            Cliente cliente = repo.findById(1).orElseThrow();
-            System.out.println(cliente);
-
-            System.out.println(repo.findByNomeLike("Draven"));
-            System.out.println(repo.findAll());
+            boolean exists = repo.existsByNome("Dravsen");
+            System.out.println("O cliente Draven existe? " + (exists ? "Sim" : "Não") );
         };
     }
 
