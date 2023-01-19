@@ -26,6 +26,12 @@ public class VendasApplication {
 
             boolean exists = repo.existsByNome("Dravsen");
             System.out.println("O cliente Draven existe? " + (exists ? "Sim" : "Não") );
+
+            List<Cliente> drav = repo.encontrarPorNome("Drav");
+            System.out.println(drav);
+
+            repo.deleteByNome("Draven");
+            System.out.println(repo.findAll());
         };
     }
 
