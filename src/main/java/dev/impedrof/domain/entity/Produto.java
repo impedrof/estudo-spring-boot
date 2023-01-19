@@ -1,11 +1,21 @@
 package dev.impedrof.domain.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "produto")
 public class Produto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column()
     private Integer id;
+
+    @Column()
     private String descricao;
+
+    @Column(name = "preco_unitario")
     private BigDecimal precoUnitario;
 
     public Integer getId() {
