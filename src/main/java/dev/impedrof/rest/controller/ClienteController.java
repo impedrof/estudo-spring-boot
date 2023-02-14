@@ -55,10 +55,9 @@ public class ClienteController {
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         try {
             repo.deleteById(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
-
     }
 }
