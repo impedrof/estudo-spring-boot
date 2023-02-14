@@ -50,4 +50,15 @@ public class ClienteController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
+        try {
+            repo.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
 }
