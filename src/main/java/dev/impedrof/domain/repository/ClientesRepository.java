@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface Clientes extends JpaRepository<Cliente, Integer> {
+public interface ClientesRepository extends JpaRepository<Cliente, Integer> {
 
 //    @Query(value = "SELECT c FROM Cliente c WHERE c.nome like %:nome%")
     @Query(value = "SELECT * FROM cliente WHERE nome like %:nome%", nativeQuery = true)

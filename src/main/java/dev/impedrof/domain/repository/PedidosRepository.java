@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Set;
 
-public interface Pedidos extends JpaRepository<Pedido, Integer> {
+public interface PedidosRepository extends JpaRepository<Pedido, Integer> {
 
     Set<Pedido> findByCliente(Cliente cliente);
 }

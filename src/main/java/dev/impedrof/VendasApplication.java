@@ -2,8 +2,8 @@ package dev.impedrof;
 
 import dev.impedrof.domain.entity.Cliente;
 import dev.impedrof.domain.entity.Pedido;
-import dev.impedrof.domain.repository.Clientes;
-import dev.impedrof.domain.repository.Pedidos;
+import dev.impedrof.domain.repository.ClientesRepository;
+import dev.impedrof.domain.repository.PedidosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,27 +20,28 @@ import java.util.Set;
 @RestController
 public class VendasApplication {
 
-    @Autowired Clientes repo;
+    @Autowired
+    ClientesRepository repo;
 
     @Bean
-    public CommandLineRunner init(@Autowired Clientes clientesRepo, @Autowired Pedidos pedidosRepo) {
+    public CommandLineRunner init(@Autowired ClientesRepository clientesRepositoryRepo, @Autowired PedidosRepository pedidosRepositoryRepo) {
         return args -> {
             System.out.println("Salvando clientes");
             Cliente cliente = new Cliente("Vayne");
-            clientesRepo.save(cliente);
+            clientesRepositoryRepo.save(cliente);
 
             Pedido pedido = new Pedido();
             pedido.setCliente(cliente);
             pedido.setDataPedido(LocalDate.now());
             pedido.setTotal(BigDecimal.valueOf(100));
-            pedidosRepo.save(pedido);
+            pedidosRepositoryRepo.save(pedido);
 
 
 //            Cliente clienteFetchPedidos = clientesRepo.findClienteFetchPedidos(cliente.getId());
 //            System.out.println(clienteFetchPedidos);
 //            System.out.println(clienteFetchPedidos.getPedidos());
 
-            Set<Pedido> pedidosCliente = pedidosRepo.findByCliente(cliente);
+            Set<Pedido> pedidosCliente = pedidosRepositoryRepo.findByCliente(cliente);
             System.out.println(pedidosCliente);
         };
     }
