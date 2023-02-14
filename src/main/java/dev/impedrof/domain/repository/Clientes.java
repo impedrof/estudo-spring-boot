@@ -1,4 +1,4 @@
-package dev.impedrof.domain.repositorio;
+package dev.impedrof.domain.repository;
 
 import dev.impedrof.domain.entity.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;

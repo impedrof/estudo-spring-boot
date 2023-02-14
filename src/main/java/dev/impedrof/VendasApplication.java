@@ -1,7 +1,7 @@
 package dev.impedrof;
 
 import dev.impedrof.domain.entity.Cliente;
-import dev.impedrof.domain.repositorio.Clientes;
+import dev.impedrof.domain.repository.Clientes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
