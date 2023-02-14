@@ -1,7 +1,9 @@
 package dev.impedrof;
 
 import dev.impedrof.domain.entity.Cliente;
+import dev.impedrof.domain.entity.Pedido;
 import dev.impedrof.domain.repository.Clientes;
+import dev.impedrof.domain.repository.Pedidos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,7 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootApplication
 @RestController
@@ -18,20 +23,25 @@ public class VendasApplication {
     @Autowired Clientes repo;
 
     @Bean
-    public CommandLineRunner init(@Autowired Clientes repo) {
+    public CommandLineRunner init(@Autowired Clientes clientesRepo, @Autowired Pedidos pedidosRepo) {
         return args -> {
-            repo.save(new Cliente("Vayne"));
-            repo.save(new Cliente("Draven"));
-            System.out.println(repo.findAll());
+            System.out.println("Salvando clientes");
+            Cliente cliente = new Cliente("Vayne");
+            clientesRepo.save(cliente);
 
-            boolean exists = repo.existsByNome("Dravsen");
-            System.out.println("O cliente Draven existe? " + (exists ? "Sim" : "Não") );
+            Pedido pedido = new Pedido();
+            pedido.setCliente(cliente);
+            pedido.setDataPedido(LocalDate.now());
+            pedido.setTotal(BigDecimal.valueOf(100));
+            pedidosRepo.save(pedido);
 
-            List<Cliente> drav = repo.encontrarPorNome("Drav");
-            System.out.println(drav);
 
-            repo.deleteByNome("Draven");
-            System.out.println(repo.findAll());
+//            Cliente clienteFetchPedidos = clientesRepo.findClienteFetchPedidos(cliente.getId());
+//            System.out.println(clienteFetchPedidos);
+//            System.out.println(clienteFetchPedidos.getPedidos());
+
+            Set<Pedido> pedidosCliente = pedidosRepo.findByCliente(cliente);
+            System.out.println(pedidosCliente);
         };
     }
 
