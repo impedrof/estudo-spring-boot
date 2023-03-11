@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("clientes")
+@RequestMapping(value = "clientes")
 public class ClienteController {
 
     private final ClientesRepository repo;
@@ -40,7 +40,7 @@ public class ClienteController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping(consumes = "application/json")
+    @PostMapping()
     @ResponseBody
     public ResponseEntity<?> save(@RequestBody Cliente cliente) {
         try {
@@ -59,5 +59,17 @@ public class ClienteController {
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PutMapping("{id}")
+    @ResponseBody
+    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody Cliente cliente) {
+        return repo
+                .findById(id)
+                .map(clienteExistente -> {
+                    cliente.setId(clienteExistente.getId());
+                    repo.save(cliente);
+                    return ResponseEntity.noContent().build();
+                }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
