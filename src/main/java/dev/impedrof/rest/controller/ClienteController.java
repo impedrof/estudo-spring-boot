@@ -2,6 +2,8 @@ package dev.impedrof.rest.controller;
 
 import dev.impedrof.domain.entity.Cliente;
 import dev.impedrof.domain.repository.ClientesRepository;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -42,10 +44,10 @@ public class ClienteController {
 
     @PostMapping()
     @ResponseBody
-    public ResponseEntity<?> save(@RequestBody Cliente cliente) {
+    public ResponseEntity<?> save(@RequestBody List<Cliente> cliente) {
         try {
-            Cliente clienteSalvo = repo.save(cliente);
-            return ResponseEntity.ok(clienteSalvo);
+            List<Cliente> clientes = repo.saveAll(cliente);
+            return ResponseEntity.ok(clientes);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
@@ -71,5 +73,17 @@ public class ClienteController {
                     repo.save(cliente);
                     return ResponseEntity.noContent().build();
                 }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
+    @GetMapping("filtro")
+    public ResponseEntity<?> find(Cliente filtro) {
+        ExampleMatcher matcher = ExampleMatcher
+                                    .matching()
+                                    .withIgnoreCase()
+                                    .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example<Cliente> example = Example.of(filtro, matcher);
+        List<Cliente> clientes = repo.findAll(example);
+        return ResponseEntity.ok(clientes);
     }
 }

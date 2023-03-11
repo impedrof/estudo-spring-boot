@@ -15,6 +15,9 @@ public class Cliente {
     @Column(name = "nome", length = 100)
     private String nome;
 
+    @Column(name = "cpf", length = 11)
+    private String cpf;
+
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<Pedido> pedidos;
 
@@ -27,6 +30,11 @@ public class Cliente {
     public Cliente(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
+    }
+
+    public Cliente(String nome, String cpf) {
+        this.nome = nome;
+        this.cpf = cpf;
     }
 
     public Integer getId() {
@@ -51,6 +59,14 @@ public class Cliente {
 
     public void setPedidos(Set<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     @Override
